@@ -28,6 +28,7 @@ typedef $$RemoteAssetEntityTableCreateCompanionBuilder
   i0.Value<String?> thumbHash,
   i0.Value<DateTime?> deletedAt,
   required i2.AssetVisibility visibility,
+  i0.Value<String?> stackId,
 });
 typedef $$RemoteAssetEntityTableUpdateCompanionBuilder
     = i1.RemoteAssetEntityCompanion Function({
@@ -46,6 +47,7 @@ typedef $$RemoteAssetEntityTableUpdateCompanionBuilder
   i0.Value<String?> thumbHash,
   i0.Value<DateTime?> deletedAt,
   i0.Value<i2.AssetVisibility> visibility,
+  i0.Value<String?> stackId,
 });
 
 final class $$RemoteAssetEntityTableReferences extends i0.BaseReferences<
@@ -139,6 +141,9 @@ class $$RemoteAssetEntityTableFilterComposer
           column: $table.visibility,
           builder: (column) => i0.ColumnWithTypeConverterFilters(column));
 
+  i0.ColumnFilters<String> get stackId => $composableBuilder(
+      column: $table.stackId, builder: (column) => i0.ColumnFilters(column));
+
   i5.$$UserEntityTableFilterComposer get ownerId {
     final i5.$$UserEntityTableFilterComposer composer = $composerBuilder(
         composer: this,
@@ -221,6 +226,9 @@ class $$RemoteAssetEntityTableOrderingComposer
       column: $table.visibility,
       builder: (column) => i0.ColumnOrderings(column));
 
+  i0.ColumnOrderings<String> get stackId => $composableBuilder(
+      column: $table.stackId, builder: (column) => i0.ColumnOrderings(column));
+
   i5.$$UserEntityTableOrderingComposer get ownerId {
     final i5.$$UserEntityTableOrderingComposer composer = $composerBuilder(
         composer: this,
@@ -296,6 +304,9 @@ class $$RemoteAssetEntityTableAnnotationComposer
       $composableBuilder(
           column: $table.visibility, builder: (column) => column);
 
+  i0.GeneratedColumn<String> get stackId =>
+      $composableBuilder(column: $table.stackId, builder: (column) => column);
+
   i5.$$UserEntityTableAnnotationComposer get ownerId {
     final i5.$$UserEntityTableAnnotationComposer composer = $composerBuilder(
         composer: this,
@@ -359,6 +370,7 @@ class $$RemoteAssetEntityTableTableManager extends i0.RootTableManager<
             i0.Value<String?> thumbHash = const i0.Value.absent(),
             i0.Value<DateTime?> deletedAt = const i0.Value.absent(),
             i0.Value<i2.AssetVisibility> visibility = const i0.Value.absent(),
+            i0.Value<String?> stackId = const i0.Value.absent(),
           }) =>
               i1.RemoteAssetEntityCompanion(
             name: name,
@@ -376,6 +388,7 @@ class $$RemoteAssetEntityTableTableManager extends i0.RootTableManager<
             thumbHash: thumbHash,
             deletedAt: deletedAt,
             visibility: visibility,
+            stackId: stackId,
           ),
           createCompanionCallback: ({
             required String name,
@@ -393,6 +406,7 @@ class $$RemoteAssetEntityTableTableManager extends i0.RootTableManager<
             i0.Value<String?> thumbHash = const i0.Value.absent(),
             i0.Value<DateTime?> deletedAt = const i0.Value.absent(),
             required i2.AssetVisibility visibility,
+            i0.Value<String?> stackId = const i0.Value.absent(),
           }) =>
               i1.RemoteAssetEntityCompanion.insert(
             name: name,
@@ -410,6 +424,7 @@ class $$RemoteAssetEntityTableTableManager extends i0.RootTableManager<
             thumbHash: thumbHash,
             deletedAt: deletedAt,
             visibility: visibility,
+            stackId: stackId,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (
@@ -579,6 +594,12 @@ class $RemoteAssetEntityTable extends i3.RemoteAssetEntity
               type: i0.DriftSqlType.int, requiredDuringInsert: true)
           .withConverter<i2.AssetVisibility>(
               i1.$RemoteAssetEntityTable.$convertervisibility);
+  static const i0.VerificationMeta _stackIdMeta =
+      const i0.VerificationMeta('stackId');
+  @override
+  late final i0.GeneratedColumn<String> stackId = i0.GeneratedColumn<String>(
+      'stack_id', aliasedName, true,
+      type: i0.DriftSqlType.string, requiredDuringInsert: false);
   @override
   List<i0.GeneratedColumn> get $columns => [
         name,
@@ -595,7 +616,8 @@ class $RemoteAssetEntityTable extends i3.RemoteAssetEntity
         localDateTime,
         thumbHash,
         deletedAt,
-        visibility
+        visibility,
+        stackId
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -673,6 +695,10 @@ class $RemoteAssetEntityTable extends i3.RemoteAssetEntity
       context.handle(_deletedAtMeta,
           deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta));
     }
+    if (data.containsKey('stack_id')) {
+      context.handle(_stackIdMeta,
+          stackId.isAcceptableOrUnknown(data['stack_id']!, _stackIdMeta));
+    }
     return context;
   }
 
@@ -715,6 +741,8 @@ class $RemoteAssetEntityTable extends i3.RemoteAssetEntity
       visibility: i1.$RemoteAssetEntityTable.$convertervisibility.fromSql(
           attachedDatabase.typeMapping.read(
               i0.DriftSqlType.int, data['${effectivePrefix}visibility'])!),
+      stackId: attachedDatabase.typeMapping
+          .read(i0.DriftSqlType.string, data['${effectivePrefix}stack_id']),
     );
   }
 
@@ -751,6 +779,7 @@ class RemoteAssetEntityData extends i0.DataClass
   final String? thumbHash;
   final DateTime? deletedAt;
   final i2.AssetVisibility visibility;
+  final String? stackId;
   const RemoteAssetEntityData(
       {required this.name,
       required this.type,
@@ -766,7 +795,8 @@ class RemoteAssetEntityData extends i0.DataClass
       this.localDateTime,
       this.thumbHash,
       this.deletedAt,
-      required this.visibility});
+      required this.visibility,
+      this.stackId});
   @override
   Map<String, i0.Expression> toColumns(bool nullToAbsent) {
     final map = <String, i0.Expression>{};
@@ -803,6 +833,9 @@ class RemoteAssetEntityData extends i0.DataClass
       map['visibility'] = i0.Variable<int>(
           i1.$RemoteAssetEntityTable.$convertervisibility.toSql(visibility));
     }
+    if (!nullToAbsent || stackId != null) {
+      map['stack_id'] = i0.Variable<String>(stackId);
+    }
     return map;
   }
 
@@ -827,6 +860,7 @@ class RemoteAssetEntityData extends i0.DataClass
       deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
       visibility: i1.$RemoteAssetEntityTable.$convertervisibility
           .fromJson(serializer.fromJson<int>(json['visibility'])),
+      stackId: serializer.fromJson<String?>(json['stackId']),
     );
   }
   @override
@@ -850,6 +884,7 @@ class RemoteAssetEntityData extends i0.DataClass
       'deletedAt': serializer.toJson<DateTime?>(deletedAt),
       'visibility': serializer.toJson<int>(
           i1.$RemoteAssetEntityTable.$convertervisibility.toJson(visibility)),
+      'stackId': serializer.toJson<String?>(stackId),
     };
   }
 
@@ -868,7 +903,8 @@ class RemoteAssetEntityData extends i0.DataClass
           i0.Value<DateTime?> localDateTime = const i0.Value.absent(),
           i0.Value<String?> thumbHash = const i0.Value.absent(),
           i0.Value<DateTime?> deletedAt = const i0.Value.absent(),
-          i2.AssetVisibility? visibility}) =>
+          i2.AssetVisibility? visibility,
+          i0.Value<String?> stackId = const i0.Value.absent()}) =>
       i1.RemoteAssetEntityData(
         name: name ?? this.name,
         type: type ?? this.type,
@@ -888,6 +924,7 @@ class RemoteAssetEntityData extends i0.DataClass
         thumbHash: thumbHash.present ? thumbHash.value : this.thumbHash,
         deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
         visibility: visibility ?? this.visibility,
+        stackId: stackId.present ? stackId.value : this.stackId,
       );
   RemoteAssetEntityData copyWithCompanion(i1.RemoteAssetEntityCompanion data) {
     return RemoteAssetEntityData(
@@ -912,6 +949,7 @@ class RemoteAssetEntityData extends i0.DataClass
       deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
       visibility:
           data.visibility.present ? data.visibility.value : this.visibility,
+      stackId: data.stackId.present ? data.stackId.value : this.stackId,
     );
   }
 
@@ -932,7 +970,8 @@ class RemoteAssetEntityData extends i0.DataClass
           ..write('localDateTime: $localDateTime, ')
           ..write('thumbHash: $thumbHash, ')
           ..write('deletedAt: $deletedAt, ')
-          ..write('visibility: $visibility')
+          ..write('visibility: $visibility, ')
+          ..write('stackId: $stackId')
           ..write(')'))
         .toString();
   }
@@ -953,7 +992,8 @@ class RemoteAssetEntityData extends i0.DataClass
       localDateTime,
       thumbHash,
       deletedAt,
-      visibility);
+      visibility,
+      stackId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -972,7 +1012,8 @@ class RemoteAssetEntityData extends i0.DataClass
           other.localDateTime == this.localDateTime &&
           other.thumbHash == this.thumbHash &&
           other.deletedAt == this.deletedAt &&
-          other.visibility == this.visibility);
+          other.visibility == this.visibility &&
+          other.stackId == this.stackId);
 }
 
 class RemoteAssetEntityCompanion
@@ -992,6 +1033,7 @@ class RemoteAssetEntityCompanion
   final i0.Value<String?> thumbHash;
   final i0.Value<DateTime?> deletedAt;
   final i0.Value<i2.AssetVisibility> visibility;
+  final i0.Value<String?> stackId;
   const RemoteAssetEntityCompanion({
     this.name = const i0.Value.absent(),
     this.type = const i0.Value.absent(),
@@ -1008,6 +1050,7 @@ class RemoteAssetEntityCompanion
     this.thumbHash = const i0.Value.absent(),
     this.deletedAt = const i0.Value.absent(),
     this.visibility = const i0.Value.absent(),
+    this.stackId = const i0.Value.absent(),
   });
   RemoteAssetEntityCompanion.insert({
     required String name,
@@ -1025,6 +1068,7 @@ class RemoteAssetEntityCompanion
     this.thumbHash = const i0.Value.absent(),
     this.deletedAt = const i0.Value.absent(),
     required i2.AssetVisibility visibility,
+    this.stackId = const i0.Value.absent(),
   })  : name = i0.Value(name),
         type = i0.Value(type),
         id = i0.Value(id),
@@ -1047,6 +1091,7 @@ class RemoteAssetEntityCompanion
     i0.Expression<String>? thumbHash,
     i0.Expression<DateTime>? deletedAt,
     i0.Expression<int>? visibility,
+    i0.Expression<String>? stackId,
   }) {
     return i0.RawValuesInsertable({
       if (name != null) 'name': name,
@@ -1064,6 +1109,7 @@ class RemoteAssetEntityCompanion
       if (thumbHash != null) 'thumb_hash': thumbHash,
       if (deletedAt != null) 'deleted_at': deletedAt,
       if (visibility != null) 'visibility': visibility,
+      if (stackId != null) 'stack_id': stackId,
     });
   }
 
@@ -1082,7 +1128,8 @@ class RemoteAssetEntityCompanion
       i0.Value<DateTime?>? localDateTime,
       i0.Value<String?>? thumbHash,
       i0.Value<DateTime?>? deletedAt,
-      i0.Value<i2.AssetVisibility>? visibility}) {
+      i0.Value<i2.AssetVisibility>? visibility,
+      i0.Value<String?>? stackId}) {
     return i1.RemoteAssetEntityCompanion(
       name: name ?? this.name,
       type: type ?? this.type,
@@ -1099,6 +1146,7 @@ class RemoteAssetEntityCompanion
       thumbHash: thumbHash ?? this.thumbHash,
       deletedAt: deletedAt ?? this.deletedAt,
       visibility: visibility ?? this.visibility,
+      stackId: stackId ?? this.stackId,
     );
   }
 
@@ -1153,6 +1201,9 @@ class RemoteAssetEntityCompanion
           .$RemoteAssetEntityTable.$convertervisibility
           .toSql(visibility.value));
     }
+    if (stackId.present) {
+      map['stack_id'] = i0.Variable<String>(stackId.value);
+    }
     return map;
   }
 
@@ -1173,7 +1224,8 @@ class RemoteAssetEntityCompanion
           ..write('localDateTime: $localDateTime, ')
           ..write('thumbHash: $thumbHash, ')
           ..write('deletedAt: $deletedAt, ')
-          ..write('visibility: $visibility')
+          ..write('visibility: $visibility, ')
+          ..write('stackId: $stackId')
           ..write(')'))
         .toString();
   }
